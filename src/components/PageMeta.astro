@@ -4,6 +4,7 @@ import {
   SITE_TITLE,
   SITE_DESCRIPTION,
   SITE_URL,
+  GOOGLE_TOKEN,
 } from "../config";
 
 export interface Props {
@@ -27,6 +28,7 @@ const { meta, og, twitter } = getPageMeta({
 <!-- Primary Meta Tags -->
 <title>{meta.title}</title>
 <meta name="title" content={meta.title} />
+<meta name="google-site-verification" content={GOOGLE_TOKEN} />
 {meta.description && <meta name="description" content={meta.description} />}
 
 <!-- Open Graph / Facebook -->
