@@ -1,13 +1,9 @@
 ---
 external: false
-title: "Understanding NestJS: Getting Started"
+title: "Exploring NestJS: A TypeScript Framework for Scalable Node.js Applications"
 description: "NestJS is a powerful and versatile framework for building scalable server-side applications in Node.js."
 date: 2023-11-27
 ---
-
-# Exploring NestJS: A TypeScript Framework for Scalable Node.js Applications
-
-With the explosive growth of JavaScript and TypeScript frameworks, a plethora of packages is easily accessible via popular package management systems like Node Package Manager (NPM).
 
 ## Introduction to NestJS
 
