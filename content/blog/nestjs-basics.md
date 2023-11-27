@@ -154,7 +154,7 @@ This command generates two files: `todo.controller.spec.ts` for writing unit tes
 
 For our to-do list app, open the `todo.controller.ts` file and replace its contents with the following code:
 
-```TypeScript
+```typescript
 // directory - nest-todo-app/src/todo/todo.controller.ts
 
 import {
@@ -169,67 +169,66 @@ import {
   Query,
   Delete,
   Post,
-
-} from '@nestjs/common';
-import { TodoService } from './todo.service';
-import { CreateTodoDTO } from './dto/create-todo.dto';
-@Controller('todos')
+} from "@nestjs/common";
+import { TodoService } from "./todo.service";
+import { CreateTodoDTO } from "./dto/create-todo.dto";
+@Controller("todos")
 export class TodoController {
   constructor(private todoService: TodoService) {}
 
   // Create a todo
-  @Post('/')
+  @Post("/")
   async create(@Res() res, @Body() createTodoDTO: CreateTodoDTO) {
     const newTodo = await this.todoService.addTodo(createTodoDTO);
     return res.status(HttpStatus.OK).json({
-      message: 'Todo has been submitted successfully!',
+      message: "Todo has been submitted successfully!",
       todo: newTodo,
     });
   }
 
   // Fetch a particular todo using ID
-  @Get('/:todoID')
-  async getTodo(@Res() res, @Param('todoID') todoID) {
+  @Get("/:todoID")
+  async getTodo(@Res() res, @Param("todoID") todoID) {
     const todo = await this.todoService.getTodo(todoID);
     if (!todo) {
-      throw new NotFoundException('Todo does not exist!');
+      throw new NotFoundException("Todo does not exist!");
     }
     return res.status(HttpStatus.OK).json(todo);
   }
 
   // Fetch all todos
-  @Get('/')
+  @Get("/")
   async getTodos(@Res() res) {
     const todos = await this.todoService.getTodos();
     return res.status(HttpStatus.OK).json(todos);
   }
 
   // Edit a particular todo using ID
-  @Put('/')
+  @Put("/")
   async editTodo(
     @Res() res,
-    @Query('todoID') todoID,
-    @Body() createTodoDTO: CreateTodoDTO,
+    @Query("todoID") todoID,
+    @Body() createTodoDTO: CreateTodoDTO
   ) {
     const editedTodo = await this.todoService.editTodo(todoID, createTodoDTO);
     if (!editedTodo) {
-      throw new NotFoundException('Todo does not exist!');
+      throw new NotFoundException("Todo does not exist!");
     }
     return res.status(HttpStatus.OK).json({
-      message: 'Todo has been successfully updated',
+      message: "Todo has been successfully updated",
       todo: editedTodo,
     });
   }
 
   // Delete a todo using ID
-  @Delete('/delete')
-  async deleteTodo(@Res() res, @Query('todoID') todoID) {
+  @Delete("/delete")
+  async deleteTodo(@Res() res, @Query("todoID") todoID) {
     const deletedTodo = await this.todoService.deleteTodo(todoID);
     if (!deletedTodo) {
-      throw new NotFoundException('Todo does not exist!');
+      throw new NotFoundException("Todo does not exist!");
     }
     return res.status(HttpStatus.OK).json({
-      message: 'Todo has been deleted!',
+      message: "Todo has been deleted!",
       todo: deletedTodo,
     });
   }
@@ -274,11 +273,11 @@ This command generates a `todo.service.ts` file, where you can implement the nec
 
 Let's edit this file:
 
-```TypeScript
+```typescript
 // directory - nest-todo-app/src/todo/todo.service.ts
 
-import { Injectable } from '@nestjs/common';
-import { CreateTodoDTO } from './dto/create-todo.dto';
+import { Injectable } from "@nestjs/common";
+import { CreateTodoDTO } from "./dto/create-todo.dto";
 
 // Creates a Todo interface to show exactly the attribute of our Todo
 interface Todo {
@@ -290,46 +289,45 @@ interface Todo {
 
 @Injectable()
 export class TodoService {
-
-// Creates a Todo array with one Todo
+  // Creates a Todo array with one Todo
   private todos: Todo[] = [
     {
       id: 1,
-      title: 'Test todo',
-      description: 'This is a demo Todo application',
+      title: "Test todo",
+      description: "This is a demo Todo application",
       isDone: true,
     },
   ];
 
-// Creates a new todo (Add todo to array)
+  // Creates a new todo (Add todo to array)
   async addTodo(createTodoDTO: CreateTodoDTO): Promise<Todo> {
     this.todos.push(createTodoDTO);
 
-// return last added item
+    // return last added item
     return this.todos.at(-1);
   }
 
-// Returns a single todo with ID
+  // Returns a single todo with ID
   async getTodo(todoID: number): Promise<Todo> {
     const post = this.todos.find((todo) => todo.id === todoID);
     return post;
   }
 
-// Returns all todos available
+  // Returns all todos available
   async getTodos(): Promise<Todo[]> {
     return this.todos;
   }
 
-// Deletes a todo by ID and add a new one (Update process)
+  // Deletes a todo by ID and add a new one (Update process)
   async editTodo(postID: number, createTodoDTO: CreateTodoDTO): Promise<Todo> {
     await this.deleteTodo(postID);
     this.todos.push(createTodoDTO);
 
-// return last added item
+    // return last added item
     return this.todos.at(-1);
   }
 
-// Deletes a todo from the array
+  // Deletes a todo from the array
   async deleteTodo(todoID: number): Promise<any> {
     const todoIndex = this.todos.findIndex((todo) => todo.id === todoID);
     return this.todos.splice(todoIndex, 1);
@@ -353,29 +351,26 @@ This command generates a todo.module.ts file, providing a structured way to orga
 
 To observe how NestJS wires and sets up everything, take a look at the app.module.ts (root module), where controllers' providers are imported.
 
-```TypeScript
-import { Module } from '@nestjs/common';
+```typescript
+import { Module } from "@nestjs/common";
 
-import { AppController } from './app.controller';
+import { AppController } from "./app.controller";
 
-import { AppService } from './app.service';
+import { AppService } from "./app.service";
 
-import { TodoController } from './todo/todo.controller';
+import { TodoController } from "./todo/todo.controller";
 
-import { TodoService } from './todo/todo.service';
+import { TodoService } from "./todo/todo.service";
 
-import { TodoModule } from './todo/todo.module';
+import { TodoModule } from "./todo/todo.module";
 
 @Module({
-
   imports: [TodoModule],
 
   controllers: [AppController, TodoController],
 
   providers: [AppService, TodoService],
-
 })
-
 export class AppModule {}
 ```
 
@@ -390,11 +385,10 @@ Follow these steps to create the DTO:
 
 This DTO file will serve as a structured way to define the data format for creating a to-do entry in your NestJS application.
 
-```TypeScript
+```typescript
 // directory - nest-todo-app/src/todo/dto/create-todo.dto.ts
 
 export class CreateTodoDTO {
-
   readonly id: number;
 
   readonly title: string;
@@ -402,7 +396,6 @@ export class CreateTodoDTO {
   readonly description: string;
 
   readonly isDone: boolean;
-
 }
 ```
 
