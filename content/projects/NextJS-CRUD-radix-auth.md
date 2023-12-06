@@ -5,6 +5,8 @@ description: "A NextJS CRUD application powered by Radix UI and NextAuth, design
 date: 2022-09-22
 ---
 
+# NextJS CRUD - Radix UI - Next Auth
+
 ## ✏️ About the Project
 
 A NextJS CRUD application powered by Radix UI and NextAuth, designed for seamless user authentication and CRUD operations backed by a SQLite database.
@@ -13,8 +15,6 @@ Check the [Github Repository](https://github.com/manureichel/crud-radix-next).
 
 ![Next Radix App Screenshot](https://manuelreichel.com.ar/projectsfiles/next-auth-2.png)
 ![Next Radix App Screenshot](https://manuelreichel.com.ar/projectsfiles/next-auth-1.png)
-
-# NextJS CRUD - Radix UI - Next Auth
 
 ## Dev File:
 
