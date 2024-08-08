@@ -10,7 +10,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://www.github.com/manureichel/manuportfolio.git'
+                git branch: 'main',
+                    url: 'https://www.github.com/manureichel/manuportfolio.git'
             }
         }
         
